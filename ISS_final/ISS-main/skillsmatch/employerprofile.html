@@ -1,206 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Educator Profile</title>
-  <link rel="stylesheet" href="educatorprofile.css" />
+  <title>Employer Profile</title>
+  <link rel="stylesheet" href="employerprofile.css" />
 </head>
+
 <body>
   <div class="container card">
     <div class="profile-header">
-      <h1>Educator Profile</h1>
+      <h1>Employer Profile</h1>
       <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
-    <!-- ===== Teaching Preferences Section ===== -->
+    <!-- ===== Hiring Information Section ===== -->
     <div class="profile-section">
-      <h2>Your Teaching Preferences</h2>
-      <p id="teaching-info">Loading teaching information...</p>
+      <h2>Your Hiring Preferences</h2>
+      <p id="hiring-info">Loading hiring information...</p>
     </div>
 
-    <!-- ===== Skills Section ===== -->
+    <!-- ===== Ideal Candidate Section ===== -->
     <div class="profile-section">
-      <h2>Your Teaching Strengths</h2>
-      <p id="key-skill">Loading skill data...</p>
-      <ul id="skills-list"></ul>
+      <h2>Your Ideal Candidate Profile</h2>
+      <p id="candidate-profile">Loading candidate preferences...</p>
     </div>
 
-    <!-- ===== Recommended Opportunities Section ===== -->
+    <!-- ===== Matching Statistics Section ===== -->
     <div class="profile-section">
-      <h2>Recommended Opportunities</h2>
-      <div id="opportunity-list">
-        <p>Loading opportunities based on your profile...</p>
+      <h2>Candidate Matching Summary</h2>
+      <div id="matching-summary">
+        <p>Loading matching data...</p>
       </div>
     </div>
 
-    <!-- ===== Display Saved Profile Info ===== -->
-    <div class="profile-section" id="saved-info-section" style="display:none;">
-      <h2>Saved Profile Information</h2>
-      <p><strong>Name:</strong> <span id="displayName">(Not set)</span></p>
-      <p><strong>Email:</strong> <span id="displayEmail">(Not set)</span></p>
-      <p><strong>Bio:</strong> <span id="displayBio">(Not set)</span></p>
-    </div>
-
-    <!-- ===== Update Profile Form ===== -->
+    <!-- ===== Company Information Section ===== -->
     <div class="profile-section">
-      <h2>Update Profile Information</h2>
+      <h2>Update Company Information</h2>
       <form id="profileForm">
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name" required />
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" placeholder="Enter company name" required />
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        <label for="email">Contact Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter contact email" required />
 
-        <label for="bio">Short Bio:</label>
-        <textarea id="bio" name="bio" rows="3" placeholder="Tell us about your teaching experience..."></textarea>
+        <label for="bio">About Company:</label>
+        <textarea id="bio" name="bio" rows="3" placeholder="Tell us about your company and culture..."></textarea>
 
         <button type="submit" class="save-btn">Save Changes</button>
-        <button class="dashboard-btn" onclick="window.location.href='educatordashboard.html'">Go To Dashboard</button>
       </form>
     </div>
 
     <div class="button-container">
-      <button class="back-btn" onclick="window.location.href='educatorquestionnaire.html'">← Back</button>
+      <button class="back-btn" onclick="window.location.href='employerquestionnaire.html'">← Back</button>
     </div>
   </div>
 
   <script>
     // ===== Load Data from localStorage =====
-    const teachingSkill = localStorage.getItem("teachingSkill");
-    const teachingLevel = localStorage.getItem("teachingLevel");
-    const teachingSubject = localStorage.getItem("teachingSubject");
+    const idealProfile = localStorage.getItem("idealCandidateProfile");
+    const positionType = localStorage.getItem("positionType");
+    const industryField = localStorage.getItem("industryField");
+    const totalMatches = localStorage.getItem("totalMatches");
 
-    const keySkillText = document.getElementById("key-skill");
-    const skillsList = document.getElementById("skills-list");
-    const teachingInfo = document.getElementById("teaching-info");
-    const opportunityList = document.getElementById("opportunity-list");
+    const candidateProfileText = document.getElementById("candidate-profile");
+    const hiringInfo = document.getElementById("hiring-info");
+    const matchingSummary = document.getElementById("matching-summary");
 
-    // ===== Display Skill Data =====
-    if (teachingSkill) {
-      const skillDescriptions = {
-        Analytical: "Analytical Teaching — You excel at assessment, data-driven instruction, and systematic problem-solving.",
-        Creative: "Creative Teaching — You bring innovation, engagement, and fresh perspectives to education.",
-        Collaborative: "Collaborative Teaching — You excel at building relationships, fostering teamwork, and creating community.",
-        Leadership: "Leadership in Education — You are organized, strategic, and excel at managing educational programs."
-      };
-
-      keySkillText.innerHTML = `<strong>${teachingSkill}</strong><br>${skillDescriptions[teachingSkill] || ""}`;
-
-      const extraSkills = {
-        Analytical: ["Assessment Design", "Data Analysis", "Critical Thinking"],
-        Creative: ["Lesson Design", "Innovation", "Engagement Strategies"],
-        Collaborative: ["Communication", "Student Engagement", "Team Building"],
-        Leadership: ["Program Management", "Strategic Planning", "Organization"]
-      };
-
-      skillsList.innerHTML = "";
-      (extraSkills[teachingSkill] || []).forEach(skill => {
-        const li = document.createElement("li");
-        li.textContent = skill;
-        skillsList.appendChild(li);
-      });
+    // ===== Display Hiring Preferences =====
+    if (positionType && industryField) {
+      hiringInfo.innerHTML = `<strong>Position Type:</strong> ${positionType}<br><strong>Industry:</strong> ${industryField}`;
     } else {
-      keySkillText.textContent = "You haven't completed the skills test yet.";
-      skillsList.innerHTML = "<li>Take the skills assessment to see your results.</li>";
+      hiringInfo.textContent = "No hiring preference found. Please complete the assessment.";
     }
 
-    // ===== Display Teaching Preferences =====
-    if (teachingLevel && teachingSubject) {
-      const levelText = teachingLevel === "Senior High School" ? "Senior High School (Grades 11-12)" : "University/College";
-      teachingInfo.innerHTML = `<strong>Level:</strong> ${levelText}<br><strong>Subject:</strong> ${teachingSubject}`;
+    // ===== Display Ideal Candidate Profile =====
+    if (idealProfile) {
+      const profileDescriptions = {
+        "Problem-Solving": "Problem-Solvers — You value analytical, logical thinkers who excel at finding solutions to complex challenges.",
+        "Creative": "Creative Innovators — You seek imaginative individuals who bring fresh ideas and innovative approaches.",
+        "Collaborative": "Team Players — You prefer communicative professionals who excel in collaboration and teamwork.",
+        "Leadership": "Leaders — You look for initiative-takers who can drive projects forward independently."
+      };
+
+      candidateProfileText.innerHTML = `<strong>${idealProfile}</strong><br>${profileDescriptions[idealProfile] || ""}`;
     } else {
-      teachingInfo.textContent = "No teaching preference found. Please complete the questionnaire.";
+      candidateProfileText.textContent = "You haven't completed the assessment yet.";
     }
 
-    // ===== Recommended Opportunities Logic =====
-    const opportunities = {
-      Analytical: [
-        "Curriculum Developer - EducationFirst",
-        "Educational Researcher - Learning Institute",
-        "Assessment Specialist - TestPrep Academy"
-      ],
-      Creative: [
-        "Instructional Designer - EduTech Solutions",
-        "EdTech Content Creator - LearnSmart",
-        "Creative Learning Consultant - Innovative Schools"
-      ],
-      Collaborative: [
-        "Academic Advisor - University Success Center",
-        "Learning Community Coordinator - Community College",
-        "Educational Program Manager - Youth Development Org"
-      ],
-      Leadership: [
-        "Department Chair - Regional High School",
-        "Academic Director - International School",
-        "Education Program Director - Training Institute"
-      ]
-    };
-
-    opportunityList.innerHTML = "";
-    if (teachingSkill && opportunities[teachingSkill]) {
-      opportunities[teachingSkill].forEach(opp => {
-        const div = document.createElement("div");
-        div.classList.add("opportunity-card");
-        div.innerHTML = `
-          <h3>${opp.split(" - ")[0]}</h3>
-          <p><strong>Institution:</strong> ${opp.split(" - ")[1]}</p>
-        `;
-        opportunityList.appendChild(div);
-      });
+    // ===== Display Matching Summary =====
+    if (totalMatches) {
+      matchingSummary.innerHTML = `
+        <p><strong>${totalMatches} candidates</strong> match your criteria</p>
+        <p style="font-size: 0.9rem; color: #ccc; margin-top: 10px;">
+          Contact <strong style="color: #00d4ff;">employers@skillsmatch.com</strong> to connect with qualified candidates.
+        </p>
+      `;
     } else {
-      opportunityList.innerHTML = "<p>No opportunity data available yet.</p>";
+      matchingSummary.innerHTML = "<p>No matching data available yet.</p>";
     }
 
     // ===== Save Profile Information =====
-    const nameInput = document.getElementById("name");
-    const emailInput = document.getElementById("email");
-    const bioInput = document.getElementById("bio");
-
-    const savedInfoSection = document.getElementById("saved-info-section");
-    const displayName = document.getElementById("displayName");
-    const displayEmail = document.getElementById("displayEmail");
-    const displayBio = document.getElementById("displayBio");
-
     document.getElementById("profileForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      localStorage.setItem("educatorName", nameInput.value);
-      localStorage.setItem("educatorEmail", emailInput.value);
-      localStorage.setItem("educatorBio", bioInput.value);
-
-      displayProfileInfo();
-      alert("✅ Profile information saved successfully!");
+      alert("Profile updated successfully!");
     });
-
-    window.addEventListener("DOMContentLoaded", displayProfileInfo);
-
-    function displayProfileInfo() {
-      const savedName = localStorage.getItem("educatorName");
-      const savedEmail = localStorage.getItem("educatorEmail");
-      const savedBio = localStorage.getItem("educatorBio");
-
-      if (savedName || savedEmail || savedBio) {
-        savedInfoSection.style.display = "block";
-        displayName.textContent = savedName || "(Not set)";
-        displayEmail.textContent = savedEmail || "(Not set)";
-        displayBio.textContent = savedBio || "(Not set)";
-      } else {
-        savedInfoSection.style.display = "none";
-      }
-
-      // Pre-fill the form fields with saved data
-      if (savedName) nameInput.value = savedName;
-      if (savedEmail) emailInput.value = savedEmail;
-      if (savedBio) bioInput.value = savedBio;
-    }
 
     // ===== Logout Function =====
     function logout() {
       if (confirm("Are you sure you want to log out?")) {
-        localStorage.removeItem("loggedUser");
+        localStorage.clear();
         window.location.href = "signin.html";
       }
     }
   </script>
 </body>
+
 </html>
