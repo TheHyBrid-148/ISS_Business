@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Students</title>
+    <link rel="stylesheet" href="studentprofs.css">
+    <style>
+        .filter-btn {
+            margin-top: 10px;
+            padding: 8px 14px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Popup styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .popup-content select, .popup-content button {
+            margin-top: 10px;
+            padding: 8px;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .popup-content button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .popup-content button:hover {
+            background-color: #0056b3;
+        }
+
+        .close-btn {
+            background-color: #ccc;
+            color: black;
+        }
+
+        .close-btn:hover {
+            background-color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Filter Students by Strand</h1>
+    </header>
+
+    <main class="card-container" id="student-container">
+        <!-- Student cards (same as student profiles) -->
+        <div class="student-card">
+            <h2>Alyssa G.</h2>
+            <p><strong>Strand:</strong> STEM</p>
+            <p><strong>Path:</strong> Engineering</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Marcus V.</h2>
+            <p><strong>Strand:</strong> ABM</p>
+            <p><strong>Path:</strong> Business Management</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Renee T.</h2>
+            <p><strong>Strand:</strong> HUMSS</p>
+            <p><strong>Path:</strong> Psychology</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Ian K.</h2>
+            <p><strong>Strand:</strong> Career Ops</p>
+            <p><strong>Path:</strong> Culinary Arts</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Jasmine C.</h2>
+            <p><strong>Strand:</strong> STEM</p>
+            <p><strong>Path:</strong> Architecture</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Leo F.</h2>
+            <p><strong>Strand:</strong> HUMSS</p>
+            <p><strong>Path:</strong> Journalism</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Hannah M.</h2>
+            <p><strong>Strand:</strong> ABM</p>
+            <p><strong>Path:</strong> Marketing</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Patrick S.</h2>
+            <p><strong>Strand:</strong> STEM</p>
+            <p><strong>Path:</strong> Computer Science</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Grace L.</h2>
+            <p><strong>Strand:</strong> Career Ops</p>
+            <p><strong>Path:</strong> Hospitality</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Dylan P.</h2>
+            <p><strong>Strand:</strong> ABM</p>
+            <p><strong>Path:</strong> Finance</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Bea J.</h2>
+            <p><strong>Strand:</strong> HUMSS</p>
+            <p><strong>Path:</strong> Sociology</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Carlos D.</h2>
+            <p><strong>Strand:</strong> Career Ops</p>
+            <p><strong>Path:</strong> Automotive Tech</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Monica R.</h2>
+            <p><strong>Strand:</strong> STEM</p>
+            <p><strong>Path:</strong> Medicine</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Erwin B.</h2>
+            <p><strong>Strand:</strong> ABM</p>
+            <p><strong>Path:</strong> Entrepreneurship</p>
+        </div>
+
+        <div class="student-card">
+            <h2>Sophia K.</h2>
+            <p><strong>Strand:</strong> HUMSS</p>
+            <p><strong>Path:</strong> Political Science</p>
+        </div>
+    </main>
+
+    <button class="back-btn" onclick="window.location.href='educatorops.html'">Back</button>
+
+    <!-- Popup structure -->
+    <div class="popup" id="filterPopup">
+        <div class="popup-content">
+            <h3>Assign to Batch</h3>
+            <p id="studentName"></p>
+            <select id="batchSelect">
+                <option value="">Select Batch</option>
+                <option value="Batch A">Batch A</option>
+                <option value="Batch B">Batch B</option>
+                <option value="Batch C">Batch C</option>
+            </select>
+            <button onclick="assignBatch()">Assign</button>
+            <button class="close-btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll(".student-card");
+            
+            // Show only non–Career Ops students
+            cards.forEach(card => {
+                const strand = card.querySelector("p:nth-of-type(1)").textContent.toLowerCase();
+                if (!strand.includes("career ops")) {
+                    const filterBtn = document.createElement("button");
+                    filterBtn.textContent = "Filter";
+                    filterBtn.classList.add("filter-btn");
+                    filterBtn.onclick = () => openPopup(card.querySelector("h2").textContent);
+                    card.appendChild(filterBtn);
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+
+        // Popup functions
+        const popup = document.getElementById("filterPopup");
+        const studentName = document.getElementById("studentName");
+
+        function openPopup(name) {
+            studentName.textContent = "Student: " + name;
+            popup.style.display = "flex";
+        }
+
+        function closePopup() {
+            popup.style.display = "none";
+            document.getElementById("batchSelect").value = "";
+        }
+
+        function assignBatch() {
+            const batch = document.getElementById("batchSelect").value;
+            if (!batch) {
+                alert("Please select a batch first.");
+                return;
+            }
+            alert(`${studentName.textContent} has been assigned to ${batch}.`);
+            closePopup();
+        }
+    </script>
+</body>
+</html>

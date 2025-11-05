@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employer Assessment</title>
+  <link rel="stylesheet" href="./employerquestionnaire.css" />
+</head>
+
+<body>
+  <!-- Logout Button -->
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <div class="container card">
+    <h1>Employer Candidate Assessment</h1>
+    <p class="subtitle">
+      Find the best candidates! This assessment helps identify what qualities you value most and matches you with suitable candidates.
+    </p>
+
+    <!-- ===== Company Information Section ===== -->
+    <div id="companySection" class="questionnaire">
+      <h2 class="section-title">Your Hiring Needs</h2>
+      
+      <div class="question">
+        <h3>What type of position are you hiring for?</h3>
+        <select id="positionType" class="dropdown">
+          <option value="" disabled selected>-- Select Position Type --</option>
+          <option value="Internship">Internship</option>
+          <option value="Part-time">Part-time</option>
+          <option value="Full-time">Full-time</option>
+        </select>
+      </div>
+      
+      <div class="question">
+        <h3>What industry/field?</h3>
+        <select id="industryField" class="dropdown">
+          <option value="" disabled selected>-- Select Industry --</option>
+          <option value="Technology">Technology (Software, IT, Data)</option>
+          <option value="Business">Business (Marketing, Finance, Management)</option>
+          <option value="Education">Education (Teaching, Training)</option>
+          <option value="Healthcare">Healthcare (Nursing, Medical)</option>
+          <option value="Engineering">Engineering (Mechanical, Civil, Electrical)</option>
+          <option value="Creative">Creative (Design, Content, Media)</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      
+      <button id="continueToAssessment" class="continue-btn">Continue →</button>
+    </div>
+
+    <!-- ===== Candidate Preference Assessment ===== -->
+    <div id="assessmentTest" class="questionnaire hidden">
+      <h2 class="section-title">Candidate Preference Assessment</h2>
+
+      <div class="question">
+        <h3>1. What's most important when evaluating candidates?</h3>
+        <div class="options">
+          <label><input type="radio" name="q1" value="Problem-Solving"> Problem-solving abilities and logical thinking</label>
+          <label><input type="radio" name="q1" value="Creative"> Creativity and innovation</label>
+          <label><input type="radio" name="q1" value="Collaborative"> Communication and collaboration skills</label>
+          <label><input type="radio" name="q1" value="Leadership"> Leadership and initiative</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>2. How do candidates typically work in your company?</h3>
+        <div class="options">
+          <label><input type="radio" name="q2" value="Problem-Solving"> Independently with clear goals</label>
+          <label><input type="radio" name="q2" value="Collaborative"> In teams with frequent collaboration</label>
+          <label><input type="radio" name="q2" value="Creative"> Mix of both depending on projects</label>
+          <label><input type="radio" name="q2" value="Leadership"> With close supervision and mentoring</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>3. What work environment best describes your company?</h3>
+        <div class="options">
+          <label><input type="radio" name="q3" value="Creative"> Fast-paced, startup culture</label>
+          <label><input type="radio" name="q3" value="Leadership"> Structured, corporate environment</label>
+          <label><input type="radio" name="q3" value="Collaborative"> Flexible, remote-friendly</label>
+          <label><input type="radio" name="q3" value="Problem-Solving"> Traditional office setting</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>4. What matters most in your ideal candidate?</h3>
+        <div class="options">
+          <label><input type="radio" name="q4" value="Problem-Solving"> Technical skills and expertise</label>
+          <label><input type="radio" name="q4" value="Collaborative"> Soft skills and adaptability</label>
+          <label><input type="radio" name="q4" value="Leadership"> Experience and track record</label>
+          <label><input type="radio" name="q4" value="Creative"> Potential and eagerness to learn</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>5. How do you prefer candidates to approach challenges?</h3>
+        <div class="options">
+          <label><input type="radio" name="q5" value="Problem-Solving"> Analytical and data-driven</label>
+          <label><input type="radio" name="q5" value="Creative"> Creative and experimental</label>
+          <label><input type="radio" name="q5" value="Collaborative"> Collaborative and team-oriented</label>
+          <label><input type="radio" name="q5" value="Leadership"> Structured and methodical</label>
+        </div>
+      </div>
+
+      <button id="submitAssessmentBtn" class="continue-btn">See Results →</button>
+    </div>
+
+    <!-- ===== Result Section ===== -->
+    <div id="result" class="result-box hidden">
+      <h2>Matching Results</h2>
+      <p><strong>Your Ideal Candidate Profile:</strong> <span id="candidateProfile"></span></p>
+      
+      <div class="stats-box">
+        <h3>📊 Candidates Matching Your Criteria</h3>
+        <ul id="candidateStats"></ul>
+      </div>
+
+      <p style="margin-top: 20px; font-size: 0.95rem; color: #ccc;">
+        <strong>Privacy Notice:</strong> To protect candidate privacy, detailed profiles are shared only after mutual interest and consent.
+      </p>
+      
+      <p style="margin-top: 10px;">
+        <strong>Next Steps:</strong> Contact us at <span style="color: #00f2fe;">employers@skillsmatch.com</span> to connect with qualified candidates.
+      </p>
+      
+      <button class="continue-btn" onclick="window.location.href='employerprofile.html'">View My Profile</button>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='signin.html'">← Back</button>
+    </div>
+  </div>
+
+  <!-- ===== JavaScript Logic ===== -->
+  <script>
+    const companySection = document.getElementById("companySection");
+    const assessmentTest = document.getElementById("assessmentTest");
+    const resultBox = document.getElementById("result");
+    const assessmentBtn = document.getElementById("submitAssessmentBtn");
+    const candidateProfile = document.getElementById("candidateProfile");
+    const candidateStats = document.getElementById("candidateStats");
+    const continueBtn = document.getElementById("continueToAssessment");
+
+    // ===== Company Information Logic =====
+    continueBtn.addEventListener("click", () => {
+      const position = document.getElementById("positionType").value;
+      const industry = document.getElementById("industryField").value;
+      
+      if (!position || !industry) {
+        alert("Please select both position type and industry before continuing.");
+        return;
+      }
+      
+      localStorage.setItem("positionType", position);
+      localStorage.setItem("industryField", industry);
+      companySection.classList.add("hidden");
+      assessmentTest.classList.remove("hidden");
+    });
+
+    // ===== Assessment Logic ===== 
+    assessmentBtn.addEventListener("click", () => {
+      const answers = [...document.querySelectorAll("input[name^='q']:checked")].map(a => a.value);
+
+      if (answers.length < 5) {
+        alert("Please answer all questions before continuing!");
+        return;
+      }
+
+      const counts = answers.reduce((acc, val) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+      }, {});
+
+      const topProfile = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+
+      const profileDescriptions = {
+        "Problem-Solving": "Problem-Solvers — Analytical, logical thinkers who excel at finding solutions",
+        "Creative": "Creative Innovators — Imaginative individuals who bring fresh ideas",
+        "Collaborative": "Team Players — Communicative professionals who excel in collaboration",
+        "Leadership": "Leaders — Initiative-takers who drive projects forward"
+      };
+
+      // Get employer preferences
+      const position = localStorage.getItem("positionType");
+      const industry = localStorage.getItem("industryField");
+      
+      // Generate realistic candidate counts
+      const internshipCount = Math.floor(Math.random() * 8) + 5;  // 5-12
+      const parttimeCount = Math.floor(Math.random() * 6) + 3;    // 3-8
+      const fulltimeCount = Math.floor(Math.random() * 4) + 2;    // 2-5
+      
+      const totalCandidates = internshipCount + parttimeCount + fulltimeCount;
+
+      // Display results
+      assessmentTest.classList.add("hidden");
+      resultBox.classList.remove("hidden");
+
+      candidateProfile.innerHTML = `<strong>${topProfile}</strong><br>${profileDescriptions[topProfile]}`;
+      
+      // Show only candidates matching the ideal trait (simplified display)
+      candidateStats.innerHTML = `
+        <li style="font-size: 1.15rem; margin-bottom: 20px; color: #00f2fe;">
+          <strong>${topProfile} Candidates Available</strong>
+        </li>
+        <li style="margin-left: 20px;">
+          <strong>Available for Internship:</strong> ${internshipCount} candidates
+        </li>
+        <li style="margin-left: 20px;">
+          <strong>Available for Part-time:</strong> ${parttimeCount} candidates
+        </li>
+        <li style="margin-left: 20px;">
+          <strong>Available for Full-time:</strong> ${fulltimeCount} candidates
+        </li>
+        <li style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 1.1rem;">
+          <strong>Total Candidates:</strong> ${totalCandidates}
+        </li>
+      `;
+
+      // Save result
+      localStorage.setItem("idealCandidateProfile", topProfile);
+      localStorage.setItem("totalMatches", totalCandidates);
+    });
+
+    // ===== Logout Function =====
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>

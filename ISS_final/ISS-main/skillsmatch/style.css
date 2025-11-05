@@ -1,0 +1,198 @@
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== Background ===== */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  position: relative;
+  overflow-y: auto; 
+  overflow-x: hidden;
+  padding: 3rem 1rem; 
+}
+
+.overlay {
+  position: fixed; /* changed to fixed so it covers full background while scrolling */
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  z-index: 1;
+}
+
+/* ===== Main Card ===== */
+.card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 3rem 4rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 550px;
+  width: 90%;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ===== Typography ===== */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.brand {
+  color: #4facfe;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+/* ===== Buttons ===== */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+}
+
+/* ===== Form Styling ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input {
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
+}
+
+/* ===== Continue Button ===== */
+form button {
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff;
+  border: none;
+}
+
+form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+}
+
+/* ===== Alternative Text ===== */
+.alt-text {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* ===== Back Button ===== */
+.back-btn {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .card {
+    padding: 2rem;
+  }
+
+  button {
+    font-size: 1.1rem;
+  }
+}
+
+/* ===== Optional: Center on tall screens ===== */
+@media (min-height: 700px) {
+  body {
+    align-items: center;
+    padding: 2rem;
+  }
+}

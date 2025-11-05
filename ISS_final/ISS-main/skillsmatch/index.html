@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills Match</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    function selectRole(role) {
+      localStorage.setItem("userRole", role);
+      window.location.href = "signup.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="overlay"></div>
+  <main class="card">
+    <h1>Welcome to <span class="brand">Skills Match</span></h1>
+    <p class="subtitle">Select your role to get started</p>
+
+    <div class="button-group">
+      <button onclick="selectRole('senior_high_student')">
+        I’m a Senior High School Student
+      </button>
+      <button onclick="selectRole('university_student')">
+        I’m a University Student
+      </button>
+      <button onclick="selectRole('educator')">
+        I’m an Educator
+      </button>
+      <button onclick="selectRole('employer')">
+        I’m an Employer
+      </button>
+      <button onclick="selectRole('unemployed')">
+        I’m Currently Unemployed
+      </button>
+    </div>
+  </main>
+</body>
+</html>

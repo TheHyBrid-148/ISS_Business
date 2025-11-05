@@ -1,0 +1,109 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding-top: 80px;
+}
+
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #e0e0e0;
+}
+
+.teacher-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.teacher-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: left;
+    transition: transition 0.3s ease, backgound 0.3s ease;
+}
+
+.teacher-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.teacher-card h2 {
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.hire-btn {
+    display: block;
+    background-color: #ffcc00;
+    color: #1e3c72;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin: 15px auto 0 auto;
+}
+
+.hire-btn:hover {
+    background-color: #ffe066;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #1e3c72;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+    background-color: #2a5298;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    .teacher-card h2 {
+        font-size: 1.2em;
+    }
+
+    .hire-btn {
+        padding: 8px 16px;
+    }
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Path & Skills Questionnaire</title>
+  <link rel="stylesheet" href="seniorhighstudentquestionnaire.css" />
+</head>
+
+<body>
+  <!-- Logout Button -->
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <div class="container card">
+    <h1>Find Your Ideal Career Path</h1>
+    <p class="subtitle">Answer the questions below to discover which field best matches your interests and strengths!</p>
+
+    <!-- ===== Career Path Questionnaire ===== -->
+    <div id="questionnaire" class="questionnaire">
+      <h2 class="section-title">Part 1: Career Path Test</h2>
+
+      <!-- Question 1 -->
+      <div class="question" data-question="1">
+        <h3>1. Which school subject do you enjoy the most?</h3>
+        <div class="options">
+          <label><input type="radio" name="q1" value="STEM"> Science or Math</label>
+          <label><input type="radio" name="q1" value="ABM"> Business or Economics</label>
+          <label><input type="radio" name="q1" value="HUMSS"> Social Studies or Languages</label>
+          <label><input type="radio" name="q1" value="Job"> Practical skills or hands-on work</label>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question" data-question="2">
+        <h3>2. What type of activity do you find most fulfilling?</h3>
+        <div class="options">
+          <label><input type="radio" name="q2" value="STEM"> Solving problems or analyzing data</label>
+          <label><input type="radio" name="q2" value="ABM"> Leading projects or organizing plans</label>
+          <label><input type="radio" name="q2" value="HUMSS"> Helping others or expressing ideas</label>
+          <label><input type="radio" name="q2" value="Job"> Building or repairing things</label>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question" data-question="3">
+        <h3>3. How would your friends describe you?</h3>
+        <div class="options">
+          <label><input type="radio" name="q3" value="STEM"> Logical and detail-oriented</label>
+          <label><input type="radio" name="q3" value="ABM"> Ambitious and business-minded</label>
+          <label><input type="radio" name="q3" value="HUMSS"> Empathetic and creative</label>
+          <label><input type="radio" name="q3" value="Job"> Practical and hardworking</label>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question" data-question="4">
+        <h3>4. Which environment do you prefer working in?</h3>
+        <div class="options">
+          <label><input type="radio" name="q4" value="STEM"> Lab or computer setup</label>
+          <label><input type="radio" name="q4" value="ABM"> Office or corporate setting</label>
+          <label><input type="radio" name="q4" value="HUMSS"> Classroom, studio, or public space</label>
+          <label><input type="radio" name="q4" value="Job"> Workshop, outdoors, or fieldwork</label>
+        </div>
+      </div>
+
+      <button id="submitPathBtn" class="continue-btn">Next: Test My Skills →</button>
+    </div>
+
+    <!-- ===== Career Skills Test ===== -->
+    <div id="skillsTest" class="questionnaire hidden">
+      <h2 class="section-title">Part 2: Career Skills Test</h2>
+
+      <div class="question" data-question="5">
+        <h3>1. How do you usually approach a new problem?</h3>
+        <div class="options">
+          <label><input type="radio" name="s1" value="Problem-Solving"> Analyze it and find solutions</label>
+          <label><input type="radio" name="s1" value="Creativity"> Think outside the box</label>
+          <label><input type="radio" name="s1" value="Communication"> Discuss it with others</label>
+          <label><input type="radio" name="s1" value="Leadership"> Assign roles and guide the group</label>
+        </div>
+      </div>
+
+      <div class="question" data-question="6">
+        <h3>2. What’s your strength when working in a team?</h3>
+        <div class="options">
+          <label><input type="radio" name="s2" value="Leadership"> Taking initiative and leading</label>
+          <label><input type="radio" name="s2" value="Communication"> Listening and collaborating</label>
+          <label><input type="radio" name="s2" value="Problem-Solving"> Helping resolve issues</label>
+          <label><input type="radio" name="s2" value="Creativity"> Coming up with new ideas</label>
+        </div>
+      </div>
+
+      <div class="question" data-question="7">
+        <h3>3. Which task do you enjoy the most?</h3>
+        <div class="options">
+          <label><input type="radio" name="s3" value="Creativity"> Designing or brainstorming</label>
+          <label><input type="radio" name="s3" value="Problem-Solving"> Troubleshooting or fixing</label>
+          <label><input type="radio" name="s3" value="Leadership"> Planning and decision-making</label>
+          <label><input type="radio" name="s3" value="Communication"> Presenting or writing</label>
+        </div>
+      </div>
+
+      <button id="submitSkillsBtn" class="continue-btn">See My Results</button>
+    </div>
+
+    <!-- ===== Result Section ===== -->
+    <div id="result" class="result-box hidden">
+      <h2>Your Results</h2>
+      <p><strong>Career Path:</strong> <span id="careerResult"></span></p>
+      <p><strong>Key Skill:</strong> <span id="skillResult"></span></p>
+      <button class="continue-btn" onclick="window.location.href='seniorhighstudentprofile.html'">Continue</button>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='signin.html'">← Back</button>
+    </div>
+  </div>
+
+  <!-- ===== JavaScript Logic ===== -->
+<script>
+  const pathBtn = document.getElementById("submitPathBtn");
+  const skillsBtn = document.getElementById("submitSkillsBtn");
+  const questionnaire = document.getElementById("questionnaire");
+  const skillsTest = document.getElementById("skillsTest");
+  const resultBox = document.getElementById("result");
+  const careerResult = document.getElementById("careerResult");
+  const skillResult = document.getElementById("skillResult");
+
+  let chosenPath = "";
+
+  // ====== Career Path Test ======
+  pathBtn.addEventListener("click", () => {
+    const answers = [...document.querySelectorAll("input[name^='q']:checked")].map(a => a.value);
+
+    if (answers.length < 4) {
+      alert("Please answer all questions in Part 1 before continuing!");
+      return;
+    }
+
+    const counts = answers.reduce((acc, val) => {
+      acc[val] = (acc[val] || 0) + 1;
+      return acc;
+    }, {});
+
+    const topStrand = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+    chosenPath = topStrand;
+
+    questionnaire.classList.add("hidden");
+    skillsTest.classList.remove("hidden");
+  });
+
+  // ====== Career Skills Test ======
+  skillsBtn.addEventListener("click", () => {
+    const skillAnswers = [...document.querySelectorAll("input[name^='s']:checked")].map(a => a.value);
+
+    if (skillAnswers.length < 3) {
+      alert("Please answer all questions in Part 2 before continuing!");
+      return;
+    }
+
+    const skillCounts = skillAnswers.reduce((acc, val) => {
+      acc[val] = (acc[val] || 0) + 1;
+      return acc;
+    }, {});
+
+    const topSkill = Object.keys(skillCounts).reduce((a, b) => skillCounts[a] > skillCounts[b] ? a : b);
+
+    const pathDescriptions = {
+      STEM: "You are analytical and logical. Careers in Engineering, Computer Science, or IT suit you well.",
+      ABM: "You have a sharp business mind! Consider careers in Accounting, Management, or Marketing.",
+      HUMSS: "You're a great communicator and thinker. Teaching, Psychology, or Media are perfect paths.",
+      Job: "You're practical and hands-on. Skilled trades, Architecture, or Technical fields fit you best."
+    };
+
+    const skillDescriptions = {
+      Leadership: "You have strong leadership skills — great for management or team-based roles.",
+      Communication: "You excel at communication — ideal for teaching, writing, or customer-facing work.",
+      Creativity: "You’re imaginative and innovative — perfect for design, arts, or creative industries.",
+      "Problem-Solving": "You’re a logical thinker who enjoys challenges — great for technical or research jobs."
+    };
+
+    // Display results
+    skillsTest.classList.add("hidden");
+    resultBox.classList.remove("hidden");
+
+    
+    careerResult.innerHTML = `<strong>${chosenPath}</strong><br>${pathDescriptions[chosenPath]}`;
+    skillResult.innerHTML = `<strong>${topSkill}</strong><br>${skillDescriptions[topSkill]}`;
+
+    // Save data
+    localStorage.setItem("careerPath", chosenPath);
+    localStorage.setItem("careerSkill", topSkill);
+  });
+
+  // ===== Logout Function =====
+  function logout() {
+    if (confirm("Are you sure you want to log out?")) {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+  }
+</script>
+
+
+</body>
+</html>

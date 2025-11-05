@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Profile</title>
+  <link rel="stylesheet" href="seniorhighstudentprofile.css" />
+</head>
+
+<body>
+  <div class="container card">
+    <div class="profile-header">
+      <h1>Student Profile</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- ===== Career Path Section ===== -->
+    <div class="profile-section">
+      <h2>Your Strand</h2>
+      <p><strong id="strand-name">Loading...</strong></p>
+      <p id="career-path">Loading career data...</p>
+    </div>
+
+    <!-- ===== Skills Section ===== -->
+    <div class="profile-section">
+      <h2>Your Skills & Strengths</h2>
+      <p id="key-skill">Loading skill data...</p>
+      <ul id="skills-list"></ul>
+    </div>
+
+    <!-- ===== Profile Information Section ===== -->
+    <div class="profile-section">
+      <h2>Update Profile Information</h2>
+      <form id="profileForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+        <label for="bio">Short Bio:</label>
+        <textarea id="bio" name="bio" rows="3" placeholder="Tell us something about yourself..."></textarea>
+
+        <button type="submit" class="save-btn">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='seniorhighstudentquestionnaire.html'">← Back</button>
+    </div>
+  </div>
+
+  <script>
+    // ===== Load saved data from localStorage =====
+    const careerPath = localStorage.getItem("careerPath");
+    const careerSkill = localStorage.getItem("careerSkill");
+
+    const strandName = document.getElementById("strand-name");
+    const careerPathText = document.getElementById("career-path");
+    const keySkillText = document.getElementById("key-skill");
+    const skillsList = document.getElementById("skills-list");
+
+    // ===== Career Path Display =====
+    if (careerPath) {
+      strandName.textContent = careerPath; // show "STEM", "ABM", etc.
+      const descriptions = {
+        STEM: "You are analytical and logical. Careers in Engineering, Computer Science, or IT suit you well.",
+        ABM: "You have a sharp business mind! Consider careers in Accounting, Management, or Marketing.",
+        HUMSS: "You're a great communicator and thinker. Teaching, Psychology, or Media are perfect paths.",
+        Job: "You're practical and hands-on. Skilled trades, Architecture, or Technical fields fit you best."
+      };
+      careerPathText.textContent = descriptions[careerPath] || `Your most suitable path is: ${careerPath}`;
+    } else {
+      strandName.textContent = "Not available";
+      careerPathText.textContent = "You haven’t completed the career path test yet.";
+    }
+
+    // ===== Career Skill Display =====
+    if (careerSkill) {
+      const skillDescriptions = {
+        Leadership: "You have strong leadership skills — great for management or team-based roles.",
+        Communication: "You excel at communication — ideal for teaching, writing, or customer-facing work.",
+        Creativity: "You’re imaginative and innovative — perfect for design, arts, or creative industries.",
+        "Problem-Solving": "You’re a logical thinker who enjoys challenges — great for technical or research jobs."
+      };
+
+      keySkillText.textContent = `Your key strength: ${careerSkill}`;
+      const extraSkills = {
+        Leadership: ["Decision-Making", "Team Coordination", "Motivation"],
+        Communication: ["Public Speaking", "Active Listening", "Writing Skills"],
+        Creativity: ["Design Thinking", "Innovation", "Adaptability"],
+        "Problem-Solving": ["Critical Thinking", "Research", "Analytical Skills"]
+      };
+
+      skillsList.innerHTML = "";
+      (extraSkills[careerSkill] || []).forEach(skill => {
+        const li = document.createElement("li");
+        li.textContent = skill;
+        skillsList.appendChild(li);
+      });
+    } else {
+      keySkillText.textContent = "You haven’t completed the skills test yet.";
+      skillsList.innerHTML = "<li>Complete the test to see your skill profile.</li>";
+    }
+
+    // ===== Save Profile Information =====
+    document.getElementById("profileForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Profile updated successfully!");
+    });
+
+    // ===== Logout Function =====
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.clear();
+        window.location.href = "signin.html";
+      }
+    }
+  </script>
+</body>
+</html>

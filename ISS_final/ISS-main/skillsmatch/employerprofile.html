@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employer Profile</title>
+  <link rel="stylesheet" href="employerprofile.css" />
+</head>
+
+<body>
+  <div class="container card">
+    <div class="profile-header">
+      <h1>Employer Profile</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- ===== Hiring Information Section ===== -->
+    <div class="profile-section">
+      <h2>Your Hiring Preferences</h2>
+      <p id="hiring-info">Loading hiring information...</p>
+    </div>
+
+    <!-- ===== Ideal Candidate Section ===== -->
+    <div class="profile-section">
+      <h2>Your Ideal Candidate Profile</h2>
+      <p id="candidate-profile">Loading candidate preferences...</p>
+    </div>
+
+    <!-- ===== Matching Statistics Section ===== -->
+    <div class="profile-section">
+      <h2>Candidate Matching Summary</h2>
+      <div id="matching-summary">
+        <p>Loading matching data...</p>
+      </div>
+    </div>
+
+    <!-- ===== Company Information Section ===== -->
+    <div class="profile-section">
+      <h2>Update Company Information</h2>
+      <form id="profileForm">
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" placeholder="Enter company name" required />
+
+        <label for="email">Contact Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter contact email" required />
+
+        <label for="bio">About Company:</label>
+        <textarea id="bio" name="bio" rows="3" placeholder="Tell us about your company and culture..."></textarea>
+
+        <button type="submit" class="save-btn">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='employerquestionnaire.html'">← Back</button>
+    </div>
+  </div>
+
+  <script>
+    // ===== Load Data from localStorage =====
+    const idealProfile = localStorage.getItem("idealCandidateProfile");
+    const positionType = localStorage.getItem("positionType");
+    const industryField = localStorage.getItem("industryField");
+    const totalMatches = localStorage.getItem("totalMatches");
+
+    const candidateProfileText = document.getElementById("candidate-profile");
+    const hiringInfo = document.getElementById("hiring-info");
+    const matchingSummary = document.getElementById("matching-summary");
+
+    // ===== Display Hiring Preferences =====
+    if (positionType && industryField) {
+      hiringInfo.innerHTML = `<strong>Position Type:</strong> ${positionType}<br><strong>Industry:</strong> ${industryField}`;
+    } else {
+      hiringInfo.textContent = "No hiring preference found. Please complete the assessment.";
+    }
+
+    // ===== Display Ideal Candidate Profile =====
+    if (idealProfile) {
+      const profileDescriptions = {
+        "Problem-Solving": "Problem-Solvers — You value analytical, logical thinkers who excel at finding solutions to complex challenges.",
+        "Creative": "Creative Innovators — You seek imaginative individuals who bring fresh ideas and innovative approaches.",
+        "Collaborative": "Team Players — You prefer communicative professionals who excel in collaboration and teamwork.",
+        "Leadership": "Leaders — You look for initiative-takers who can drive projects forward independently."
+      };
+
+      candidateProfileText.innerHTML = `<strong>${idealProfile}</strong><br>${profileDescriptions[idealProfile] || ""}`;
+    } else {
+      candidateProfileText.textContent = "You haven't completed the assessment yet.";
+    }
+
+    // ===== Display Matching Summary =====
+    if (totalMatches) {
+      matchingSummary.innerHTML = `
+        <p><strong>${totalMatches} candidates</strong> match your criteria</p>
+        <p style="font-size: 0.9rem; color: #ccc; margin-top: 10px;">
+          Contact <strong style="color: #00d4ff;">employers@skillsmatch.com</strong> to connect with qualified candidates.
+        </p>
+      `;
+    } else {
+      matchingSummary.innerHTML = "<p>No matching data available yet.</p>";
+    }
+
+    // ===== Save Profile Information =====
+    document.getElementById("profileForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Profile updated successfully!");
+    });
+
+    // ===== Logout Function =====
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.clear();
+        window.location.href = "signin.html";
+      }
+    }
+  </script>
+</body>
+
+</html>

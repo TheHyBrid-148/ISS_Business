@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choose a Career Field</title>
+  <link rel="stylesheet" href="umemployed.css" />
+  <script>
+  function showDropdown() {
+    const field = document.getElementById("fieldChoice").value;
+    const dropdowns = document.querySelectorAll(".dropdown");
+    dropdowns.forEach(d => {
+      d.classList.remove("show");
+      d.style.display = "none";
+    });
+
+    if (field) {
+      const selectedDropdown = document.getElementById(field + "Dropdown");
+      if (selectedDropdown) {
+        selectedDropdown.style.display = "block";
+        setTimeout(() => selectedDropdown.classList.add("show"), 10);
+      }
+    }
+  }
+
+  function continueToJobs() {
+    const field = document.getElementById("fieldChoice").value;
+    const dropdown = document.querySelector(`#${field}Dropdown select`);
+    const job = dropdown ? dropdown.value : "";
+
+    if (!field || !job) {
+      alert("Please select both a field and a job before continuing.");
+      return;
+    }
+
+    // Save selections to localStorage
+    localStorage.setItem("selectedField", field);
+    localStorage.setItem("selectedJob", job);
+
+    // Redirect to jobs page
+    window.location.href = "unemployedjobs.html";
+  }
+
+  function saveSelection() {
+    const field = document.getElementById("fieldChoice").value;
+    const dropdown = document.querySelector(`#${field}Dropdown select`);
+    const job = dropdown ? dropdown.value : "";
+
+    if (!field || !job) {
+      alert("Please select both a field and a job role before continuing.");
+      return;
+    }
+
+    localStorage.setItem("selectedField", field);
+    localStorage.setItem("selectedJob", job);
+
+    window.location.href = "unemployedjobs.html";
+  }
+</script>
+
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Which field are you interested in?</h1>
+    <p>Select a department to explore job opportunities.</p>
+
+    <select id="fieldChoice" onchange="showDropdown()">
+      <option value="">-- Select a Field --</option>
+      <option value="IT">Information Technology</option>
+      <option value="Healthcare">Healthcare</option>
+      <option value="Education">Education</option>
+      <option value="Engineering">Engineering</option>
+      <option value="Business">Business & Finance</option>
+      <option value="Hospitality">Hospitality & Tourism</option>
+      <option value="Law">Law & Public Service</option>
+    </select>
+
+    <div id="ITDropdown" class="dropdown">
+      <h2>Information Technology</h2>
+      <select>
+        <option>Web Developer</option>
+        <option>Network Administrator</option>
+        <option>Cybersecurity Specialist</option>
+        <option>Software Developer</option>
+        <option>Data Analyst</option>
+      </select>
+    </div>
+
+    <div id="HealthcareDropdown" class="dropdown">
+      <h2>Healthcare</h2>
+      <select>
+        <option>Nurse</option>
+        <option>Medical Technologist</option>
+        <option>Pharmacist</option>
+        <option>Physical Therapist</option>
+        <option>Healthcare Assistant</option>
+      </select>
+    </div>
+
+    <div id="EducationDropdown" class="dropdown">
+      <h2>Education</h2>
+      <select>
+        <option>Teacher</option>
+        <option>Guidance Counselor</option>
+        <option>Researcher</option>
+        <option>Curriculum Developer</option>
+      </select>
+    </div>
+
+    <div id="EngineeringDropdown" class="dropdown">
+      <h2>Engineering</h2>
+      <select>
+        <option>Mechanical Engineer</option>
+        <option>Civil Engineer</option>
+        <option>Electrical Engineer</option>
+        <option>Architect</option>
+      </select>
+    </div>
+
+    <div id="BusinessDropdown" class="dropdown">
+      <h2>Business & Finance</h2>
+      <select>
+        <option>Accountant</option>
+        <option>Financial Analyst</option>
+        <option>Marketing Specialist</option>
+        <option>Entrepreneur</option>
+        <option>Sales Executive</option>
+      </select>
+    </div>
+
+    <div id="HospitalityDropdown" class="dropdown">
+      <h2>Hospitality & Tourism</h2>
+      <select>
+        <option>Hotel Manager</option>
+        <option>Chef</option>
+        <option>Tour Guide</option>
+        <option>Event Coordinator</option>
+        <option>Travel Consultant</option>
+      </select>
+    </div>
+
+    <div id="LawDropdown" class="dropdown">
+      <h2>Law & Public Service</h2>
+      <select>
+        <option>Lawyer</option>
+        <option>Paralegal</option>
+        <option>Public Administrator</option>
+        <option>Police Officer</option>
+        <option>Policy Analyst</option>
+      </select>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='signin.html'">Back</button>
+      <button class="continue-btn" onclick="saveSelection()">Continue</button>
+
+    </div>
+  </div>
+</body>
+
+</html>

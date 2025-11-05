@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In | Skills Match</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <main class="card">
+    <h1>Welcome Back</h1>
+    <p class="subtitle">Sign in to your <span class="brand">Skills Match</span> account</p>
+
+    <form id="signinForm">
+      <input type="email" id="email" placeholder="Email Address" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Continue</button>
+    </form>
+
+    <p class="alt-text">
+      Don’t have an account?
+      <a href="signup.html" class="link">Sign Up</a>
+    </p>
+
+    <button class="back-btn" onclick="goBack()">← Back</button>
+  </main>
+
+  <script>
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    const role = localStorage.getItem('userRole');
+
+    document.getElementById('signinForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const savedEmail = localStorage.getItem('userEmail');
+      const savedPassword = localStorage.getItem('userPassword');
+
+      if (email === savedEmail && password === savedPassword) {
+        const redirectMap = {
+          senior_high_student: 'seniorhighstudentquestionnaire.html',
+          university_student: 'unistudentquestionnaire.html',
+          educator: 'educatorquestionnaire.html',
+          employer: 'employerquestionnaire.html',
+          unemployed: 'unemployedops.html'
+        };
+
+        // Redirect based on role
+        const nextPage = redirectMap[role] || 'index.html';
+        window.location.href = nextPage;
+      } else {
+        alert("Incorrect email or password.");
+      }
+    });
+  </script>
+</body>
+</html>

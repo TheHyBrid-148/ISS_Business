@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up | Skills Match</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <main class="card">
+    <h1 id="title">Create Your Account</h1>
+    <p class="subtitle" id="subtitle">
+      Join <span class="brand">Skills Match</span> to begin your journey
+    </p>
+
+    <form id="signupForm">
+      <input 
+        type="email" 
+        id="email" 
+        placeholder="Email Address" 
+        required 
+      />
+      <input 
+        type="password" 
+        id="password" 
+        placeholder="Password" 
+        required 
+      />
+      <button type="submit">Continue</button>
+    </form>
+
+    <p class="alt-text">
+      Already have an account? 
+      <a href="signin.html" class="link">Sign In</a>
+    </p>
+
+    <button class="back-btn" onclick="goBack()">← Back</button>
+  </main>
+
+  <script>
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    // Retrieve role and update text accordingly
+    const role = localStorage.getItem("userRole");
+    const titleEl = document.getElementById("title");
+    const subtitleEl = document.getElementById("subtitle");
+
+    if (role) {
+      switch (role) {
+        case "senior_high_student":
+          titleEl.textContent = "Sign Up as a Senior High School Student";
+          subtitleEl.innerHTML = "Join <span class='brand'>Skills Match</span> to explore future career paths!";
+          break;
+
+        case "university_student":
+          titleEl.textContent = "Sign Up as a University Student";
+          subtitleEl.innerHTML = "Join <span class='brand'>Skills Match</span> to match your skills with real opportunities!";
+          break;
+
+        case "educator":
+          titleEl.textContent = "Sign Up as an Educator";
+          subtitleEl.innerHTML = "Join <span class='brand'>Skills Match</span> to help guide students toward success.";
+          break;
+
+        case "employer":
+          titleEl.textContent = "Sign Up as an Employer";
+          subtitleEl.innerHTML = "Join <span class='brand'>Skills Match</span> to connect with skilled individuals.";
+          break;
+
+        case "unemployed":
+          titleEl.textContent = "Sign Up as a Job Seeker";
+          subtitleEl.innerHTML = "Join <span class='brand'>Skills Match</span> to discover job opportunities that fit your skills.";
+          break;
+
+        default:
+          titleEl.textContent = "Create Your Account";
+      }
+    }
+
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (!role) {
+        alert("Please select your role first.");
+        window.location.href = "index.html";
+        return;
+      }
+
+      // Save the credentials and role
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userPassword', password);
+
+      alert("Account created successfully!");
+      window.location.href = "signin.html";
+    });
+  </script>
+</body>
+</html>

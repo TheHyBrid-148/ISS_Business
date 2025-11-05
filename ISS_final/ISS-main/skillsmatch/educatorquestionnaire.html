@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Educator Skills Assessment</title>
+  <link rel="stylesheet" href="./educatorquestionnaire.css" />
+</head>
+
+<body>
+  <!-- Logout Button -->
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <div class="container card">
+    <h1>Educator Skills Assessment</h1>
+    <p class="subtitle">
+      Discover your teaching strengths! This assessment helps identify your top skills and matches you with the best educational opportunities.
+    </p>
+
+    <!-- ===== Teaching Level Selection ===== -->
+    <div id="teachingSection" class="questionnaire">
+      <h2 class="section-title">Your Teaching Preferences</h2>
+      <div class="question">
+        <h3>What level do you want to teach?</h3>
+        <select id="teachingLevel" class="dropdown">
+          <option value="" disabled selected>-- Select Teaching Level --</option>
+          <option value="Senior High School">Senior High School (Grades 11-12)</option>
+          <option value="University">University/College</option>
+        </select>
+      </div>
+      
+      <div id="subjectSection" class="question hidden">
+        <h3>What subject area?</h3>
+        <select id="subjectArea" class="dropdown">
+          <option value="" disabled selected>-- Select Subject --</option>
+        </select>
+      </div>
+      
+      <button id="continueToSkills" class="continue-btn">Continue →</button>
+    </div>
+
+    <!-- ===== Teaching Skills Test ===== -->
+    <div id="skillsTest" class="questionnaire hidden">
+      <h2 class="section-title">Skills Assessment</h2>
+
+      <div class="question">
+        <h3>1. How do you usually approach a new teaching challenge?</h3>
+        <div class="options">
+          <label><input type="radio" name="s1" value="Analytical"> Research best practices and analyze what works</label>
+          <label><input type="radio" name="s1" value="Creative"> Develop innovative teaching methods and activities</label>
+          <label><input type="radio" name="s1" value="Collaborative"> Discuss with colleagues and gather feedback</label>
+          <label><input type="radio" name="s1" value="Leadership"> Take initiative and implement structured solutions</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>2. In your teaching style, what role do you usually take?</h3>
+        <div class="options">
+          <label><input type="radio" name="s2" value="Leadership"> Director who guides the entire learning process</label>
+          <label><input type="radio" name="s2" value="Collaborative"> Facilitator who encourages student collaboration</label>
+          <label><input type="radio" name="s2" value="Creative"> Innovator who creates engaging experiences</label>
+          <label><input type="radio" name="s2" value="Analytical"> Assessor who tracks progress and adjusts methods</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>3. Which teaching activity do you enjoy most?</h3>
+        <div class="options">
+          <label><input type="radio" name="s3" value="Creative"> Designing lesson plans and creative activities</label>
+          <label><input type="radio" name="s3" value="Analytical"> Analyzing student performance and providing feedback</label>
+          <label><input type="radio" name="s3" value="Collaborative"> Facilitating group discussions and projects</label>
+          <label><input type="radio" name="s3" value="Leadership"> Organizing curriculum and managing classroom</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>4. How do you handle students with different learning needs?</h3>
+        <div class="options">
+          <label><input type="radio" name="s4" value="Collaborative"> Create peer support systems and group activities</label>
+          <label><input type="radio" name="s4" value="Creative"> Design multiple learning pathways and materials</label>
+          <label><input type="radio" name="s4" value="Analytical"> Assess individual needs and tailor instruction</label>
+          <label><input type="radio" name="s4" value="Leadership"> Implement structured support programs</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>5. What aspect of education motivates you most?</h3>
+        <div class="options">
+          <label><input type="radio" name="s5" value="Leadership"> Building strong educational programs and leading teams</label>
+          <label><input type="radio" name="s5" value="Collaborative"> Connecting with students and creating community</label>
+          <label><input type="radio" name="s5" value="Creative"> Innovating new approaches to teaching</label>
+          <label><input type="radio" name="s5" value="Analytical"> Measuring impact and improving outcomes</label>
+        </div>
+      </div>
+
+      <button id="submitSkillsBtn" class="continue-btn">See My Results →</button>
+    </div>
+
+    <!-- ===== Result Section ===== -->
+    <div id="result" class="result-box hidden">
+      <h2>Your Results</h2>
+      <p><strong>Top Skill:</strong> <span id="skillResult"></span></p>
+      <p><strong>Teaching Level:</strong> <span id="levelResult"></span></p>
+      <p><strong>Subject:</strong> <span id="subjectResult"></span></p>
+      <button class="continue-btn" onclick="window.location.href='educatorprofile.html'">Continue</button>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='signin.html'">← Back</button>
+    </div>
+  </div>
+
+  <!-- ===== JavaScript Logic ===== -->
+  <script>
+    // Subject lists
+    const subjects = {
+      "Senior High School": [
+        "General Mathematics",
+        "Statistics & Probability",
+        "Basic Calculus",
+        "English for Academic Purposes",
+        "Practical Research",
+        "Physical Science",
+        "Earth & Life Science",
+        "Philippine Politics & Governance",
+        "Physical Education & Health",
+        "Empowerment Technologies",
+        "Accounting & Business Management"
+      ],
+      "University": [
+        "Computer Science",
+        "Information Technology",
+        "Engineering",
+        "Business Administration",
+        "Education",
+        "Nursing",
+        "Psychology",
+        "Biology",
+        "Chemistry",
+        "Physics",
+        "Mathematics",
+        "English Literature",
+        "Political Science"
+      ]
+    };
+
+    const teachingSection = document.getElementById("teachingSection");
+    const skillsTest = document.getElementById("skillsTest");
+    const resultBox = document.getElementById("result");
+    const skillsBtn = document.getElementById("submitSkillsBtn");
+    const skillResult = document.getElementById("skillResult");
+    const levelResult = document.getElementById("levelResult");
+    const subjectResult = document.getElementById("subjectResult");
+    const continueBtn = document.getElementById("continueToSkills");
+
+    // Dynamic subject dropdown
+    document.getElementById("teachingLevel").addEventListener("change", function() {
+      const level = this.value;
+      const subjectSection = document.getElementById("subjectSection");
+      const subjectSelect = document.getElementById("subjectArea");
+      
+      if (level) {
+        subjectSection.classList.remove("hidden");
+        subjectSelect.innerHTML = '<option value="" disabled selected>-- Select Subject --</option>';
+        
+        subjects[level].forEach(subject => {
+          const option = document.createElement("option");
+          option.value = subject;
+          option.textContent = subject;
+          subjectSelect.appendChild(option);
+        });
+      } else {
+        subjectSection.classList.add("hidden");
+      }
+    });
+
+    // ===== Teaching Level Selection Logic =====
+    continueBtn.addEventListener("click", () => {
+      const level = document.getElementById("teachingLevel").value;
+      const subject = document.getElementById("subjectArea").value;
+      
+      if (!level || !subject) {
+        alert("Please select both teaching level and subject before continuing.");
+        return;
+      }
+      
+      localStorage.setItem("teachingLevel", level);
+      localStorage.setItem("teachingSubject", subject);
+      teachingSection.classList.add("hidden");
+      skillsTest.classList.remove("hidden");
+    });
+
+    // ===== Skills Test Logic =====
+    skillsBtn.addEventListener("click", () => {
+      const skillAnswers = [...document.querySelectorAll("input[name^='s']:checked")].map(a => a.value);
+
+      if (skillAnswers.length < 5) {
+        alert("Please answer all questions before continuing!");
+        return;
+      }
+
+      const skillCounts = skillAnswers.reduce((acc, val) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+      }, {});
+
+      const topSkill = Object.keys(skillCounts).reduce((a, b) => skillCounts[a] > skillCounts[b] ? a : b);
+
+      const skillDescriptions = {
+        Analytical: "Analytical Teaching — You excel at assessment, data-driven instruction, and systematic problem-solving.",
+        Creative: "Creative Teaching — You bring innovation, engagement, and fresh perspectives to education.",
+        Collaborative: "Collaborative Teaching — You excel at building relationships, fostering teamwork, and creating community.",
+        Leadership: "Leadership in Education — You are organized, strategic, and excel at managing educational programs."
+      };
+
+      // Display results
+      skillsTest.classList.add("hidden");
+      resultBox.classList.remove("hidden");
+
+      const level = localStorage.getItem("teachingLevel");
+      const subject = localStorage.getItem("teachingSubject");
+      
+      skillResult.innerHTML = `<strong>${topSkill}</strong><br>${skillDescriptions[topSkill]}`;
+      levelResult.textContent = level;
+      subjectResult.textContent = subject;
+
+      // Save result
+      localStorage.setItem("teachingSkill", topSkill);
+    });
+
+    // ===== Logout Function =====
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>

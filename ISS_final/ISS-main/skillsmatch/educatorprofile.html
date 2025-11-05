@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Educator Profile</title>
+  <link rel="stylesheet" href="educatorprofile.css" />
+</head>
+
+<body>
+  <div class="container card">
+    <div class="profile-header">
+      <h1>Educator Profile</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- ===== Teaching Preferences Section ===== -->
+    <div class="profile-section">
+      <h2>Your Teaching Preferences</h2>
+      <p id="teaching-info">Loading teaching information...</p>
+    </div>
+
+    <!-- ===== Skills Section ===== -->
+    <div class="profile-section">
+      <h2>Your Teaching Strengths</h2>
+      <p id="key-skill">Loading skill data...</p>
+      <ul id="skills-list"></ul>
+    </div>
+
+    <!-- ===== Recommended Opportunities Section ===== -->
+    <div class="profile-section">
+      <h2>Recommended Opportunities</h2>
+      <div id="opportunity-list">
+        <p>Loading opportunities based on your profile...</p>
+      </div>
+    </div>
+
+    <!-- ===== Profile Information Section ===== -->
+    <div class="profile-section">
+      <h2>Update Profile Information</h2>
+      <form id="profileForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+        <label for="bio">Short Bio:</label>
+        <textarea id="bio" name="bio" rows="3" placeholder="Tell us about your teaching experience..."></textarea>
+
+        <button type="submit" class="save-btn">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='educatorquestionnaire.html'">← Back</button>
+    </div>
+  </div>
+
+  <script>
+    // ===== Load Data from localStorage =====
+    const teachingSkill = localStorage.getItem("teachingSkill");
+    const teachingLevel = localStorage.getItem("teachingLevel");
+    const teachingSubject = localStorage.getItem("teachingSubject");
+
+    const keySkillText = document.getElementById("key-skill");
+    const skillsList = document.getElementById("skills-list");
+    const teachingInfo = document.getElementById("teaching-info");
+    const opportunityList = document.getElementById("opportunity-list");
+
+    // ===== Display Skill Data =====
+    if (teachingSkill) {
+      const skillDescriptions = {
+        Analytical: "Analytical Teaching — You excel at assessment, data-driven instruction, and systematic problem-solving.",
+        Creative: "Creative Teaching — You bring innovation, engagement, and fresh perspectives to education.",
+        Collaborative: "Collaborative Teaching — You excel at building relationships, fostering teamwork, and creating community.",
+        Leadership: "Leadership in Education — You are organized, strategic, and excel at managing educational programs."
+      };
+
+      keySkillText.innerHTML = `<strong>${teachingSkill}</strong><br>${skillDescriptions[teachingSkill] || ""}`;
+
+      const extraSkills = {
+        Analytical: ["Assessment Design", "Data Analysis", "Critical Thinking"],
+        Creative: ["Lesson Design", "Innovation", "Engagement Strategies"],
+        Collaborative: ["Communication", "Student Engagement", "Team Building"],
+        Leadership: ["Program Management", "Strategic Planning", "Organization"]
+      };
+
+      skillsList.innerHTML = "";
+      (extraSkills[teachingSkill] || []).forEach(skill => {
+        const li = document.createElement("li");
+        li.textContent = skill;
+        skillsList.appendChild(li);
+      });
+    } else {
+      keySkillText.textContent = "You haven't completed the skills test yet.";
+      skillsList.innerHTML = "<li>Take the skills assessment to see your results.</li>";
+    }
+
+    // ===== Display Teaching Preferences =====
+    if (teachingLevel && teachingSubject) {
+      const levelText = teachingLevel === "Senior High School" ? "Senior High School (Grades 11-12)" : "University/College";
+      teachingInfo.innerHTML = `<strong>Level:</strong> ${levelText}<br><strong>Subject:</strong> ${teachingSubject}`;
+    } else {
+      teachingInfo.textContent = "No teaching preference found. Please complete the questionnaire.";
+    }
+
+    // ===== Recommended Opportunities Logic =====
+    const opportunities = {
+      Analytical: [
+        "Curriculum Developer - EducationFirst",
+        "Educational Researcher - Learning Institute",
+        "Assessment Specialist - TestPrep Academy"
+      ],
+      Creative: [
+        "Instructional Designer - EduTech Solutions",
+        "EdTech Content Creator - LearnSmart",
+        "Creative Learning Consultant - Innovative Schools"
+      ],
+      Collaborative: [
+        "Academic Advisor - University Success Center",
+        "Learning Community Coordinator - Community College",
+        "Educational Program Manager - Youth Development Org"
+      ],
+      Leadership: [
+        "Department Chair - Regional High School",
+        "Academic Director - International School",
+        "Education Program Director - Training Institute"
+      ]
+    };
+
+    opportunityList.innerHTML = "";
+    if (teachingSkill && opportunities[teachingSkill]) {
+      opportunities[teachingSkill].forEach(opp => {
+        const div = document.createElement("div");
+        div.classList.add("opportunity-card");
+        div.innerHTML = `
+          <h3>${opp.split(" - ")[0]}</h3>
+          <p><strong>Institution:</strong> ${opp.split(" - ")[1]}</p>
+        `;
+        opportunityList.appendChild(div);
+      });
+    } else {
+      opportunityList.innerHTML = "<p>No opportunity data available yet.</p>";
+    }
+
+    // ===== Save Profile Information =====
+    document.getElementById("profileForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Profile updated successfully!");
+    });
+
+    // ===== Logout Function =====
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.clear();
+        window.location.href = "signin.html";
+      }
+    }
+  </script>
+</body>
+
+</html>

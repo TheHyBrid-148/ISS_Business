@@ -1,0 +1,223 @@
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== Background ===== */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  padding: 40px 0;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+/* ===== Card Container ===== */
+.container {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 3rem 4rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  text-align: left;
+  max-width: 800px;
+  width: 90%;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.card h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #4facfe;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ===== Section Titles ===== */
+.section-title {
+  color: #00f2fe;
+  border-left: 4px solid #4facfe;
+  padding-left: 10px;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* ===== Questions ===== */
+.question {
+  margin-bottom: 25px;
+}
+
+.question h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #e0e0e0;
+}
+
+/* ===== Options ===== */
+.options label {
+  display: block;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px 15px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #f0f0f0;
+}
+
+.options input {
+  margin-right: 10px;
+}
+
+.options label:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #4facfe;
+  transform: translateY(-2px);
+}
+
+/* ===== Buttons ===== */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  padding: 12px 25px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Continue / Next Button */
+.continue-btn {
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+}
+
+/* Back Button */
+.back-btn {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  margin-top: 25px;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* Logout Button */
+.logout-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: rgba(231, 76, 60, 0.9);
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+}
+
+.logout-btn:hover {
+  background: rgba(192, 57, 43, 1);
+  transform: scale(1.05);
+}
+
+.button-container {
+  text-align: center;
+}
+
+/* ===== Results Box ===== */
+.result-box {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.result-box h2 {
+  color: #4facfe;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.result-box p {
+  font-size: 1.05rem;
+  margin: 10px 0;
+  color: #e0e0e0;
+}
+
+.result-box strong {
+  color: #00f2fe;
+}
+
+/* ===== Hidden Class ===== */
+.hidden {
+  display: none !important;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 600px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .card h1 {
+    font-size: 1.8rem;
+  }
+
+  .question h3 {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 0.95rem;
+  }
+}

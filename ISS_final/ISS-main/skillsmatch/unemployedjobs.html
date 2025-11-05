@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Opportunities</title>
+  <link rel="stylesheet" href="unemployed.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Career Opportunities</h1>
+  </header>
+
+  <main>
+    <h2 id="careerTitle"></h2>
+    <p id="careerSubtitle"></p>
+
+    <div class="section">
+      <h3>Job Opportunities</h3>
+      <div id="jobList"></div>
+    </div>
+
+    <div class="section">
+      <h3>Internship Opportunities</h3>
+      <div id="internList"></div>
+    </div>
+
+    <button class="back-btn" onclick="window.location.href='unemployedops.html'">Back</button>
+  </main>
+
+  <script>
+    // Retrieve saved choices
+    const field = localStorage.getItem("selectedField");
+    const job = localStorage.getItem("selectedJob");
+
+    document.getElementById("careerTitle").textContent = `${job} in ${field}`;
+    document.getElementById("careerSubtitle").textContent = `Explore available positions and internships for aspiring ${job}s.`;
+
+    // Complete opportunities dataset
+    const opportunities = {
+      IT: {
+        "Web Developer": {
+          jobs: [
+            "Junior Front-End Developer - CodeWorks Inc.",
+            "Full-Stack Developer - Digital Forge",
+            "UI/UX Engineer - SoftVision Tech"
+          ],
+          internships: [
+            "Web Development Intern - ByteCraft",
+            "Front-End Intern - DevNation"
+          ]
+        },
+        "Network Administrator": {
+          jobs: [
+            "Network Admin - NetSecure Solutions",
+            "IT Support Specialist - CloudLink Systems"
+          ],
+          internships: [
+            "Network Intern - TechConnect",
+            "IT Infrastructure Intern - DataHub"
+          ]
+        },
+        "Cybersecurity Specialist": {
+          jobs: [
+            "Security Analyst - CyberShield Corp.",
+            "Incident Responder - SecureNet"
+          ],
+          internships: [
+            "Cybersecurity Intern - SafeWeb",
+            "Security Operations Intern - InfoDefender"
+          ]
+        },
+        "Software Developer": {
+          jobs: [
+            "Software Engineer - CodeWorks Ltd.",
+            "Backend Developer - CloudApps"
+          ],
+          internships: [
+            "Software Development Intern - AppLaunch",
+            "Coding Intern - TechVerse"
+          ]
+        },
+        "Data Analyst": {
+          jobs: [
+            "Data Analyst - DataSphere Analytics",
+            "Business Intelligence Associate - InsightIQ"
+          ],
+          internships: [
+            "Data Intern - Smart Data Co.",
+            "Reporting Assistant - VizTech"
+          ]
+        }
+      },
+
+      Healthcare: {
+        "Nurse": {
+          jobs: [
+            "Staff Nurse - St. Luke’s Hospital",
+            "Community Health Nurse - City Wellness Center"
+          ],
+          internships: [
+            "Clinical Intern - Mercy Medical",
+            "Hospital Assistant Intern - CarePlus"
+          ]
+        },
+        "Medical Technologist": {
+          jobs: [
+            "Lab Technologist - HealthLab Diagnostics",
+            "Clinical Analyst - MediCore Center"
+          ],
+          internships: [
+            "Lab Assistant Intern - BioTest",
+            "Medical Lab Intern - ClearPath Clinic"
+          ]
+        },
+        "Pharmacist": {
+          jobs: [
+            "Registered Pharmacist - HealthPlus Pharmacy",
+            "Clinical Pharmacist - MedCore Hospital"
+          ],
+          internships: [
+            "Pharmacy Intern - CareRx",
+            "Dispensing Assistant Intern - MediServe"
+          ]
+        },
+        "Physical Therapist": {
+          jobs: [
+            "Physical Therapist - ActiveCare Center",
+            "Rehabilitation Specialist - MoveWell Clinic"
+          ],
+          internships: [
+            "PT Intern - BodyMotion Rehab",
+            "Wellness Assistant Intern - FlexMed"
+          ]
+        },
+        "Healthcare Assistant": {
+          jobs: [
+            "Healthcare Aide - ComfortLife",
+            "Patient Support Staff - CityCare Hospital"
+          ],
+          internships: [
+            "Clinical Support Intern - HealWell",
+            "Medical Assistant Intern - VitalCare"
+          ]
+        }
+      },
+
+      Education: {
+        "Teacher": {
+          jobs: [
+            "Elementary Teacher - Sunrise Academy",
+            "High School English Teacher - Greenfield Institute"
+          ],
+          internships: [
+            "Teaching Assistant - FutureLearn School",
+            "Education Intern - ABC Tutoring Center"
+          ]
+        },
+        "Guidance Counselor": {
+          jobs: [
+            "Student Counselor - Metro High School",
+            "Career Advisor - Hope Academy"
+          ],
+          internships: [
+            "Counseling Intern - MindGrowth Center",
+            "Education Support Intern - SchoolReach"
+          ]
+        },
+        "Researcher": {
+          jobs: [
+            "Academic Researcher - EduCore Research Lab",
+            "Education Analyst - ThinkEd Group"
+          ],
+          internships: [
+            "Research Intern - EduVision Institute",
+            "Project Intern - LearnSmart Research"
+          ]
+        },
+        "Curriculum Developer": {
+          jobs: [
+            "Instructional Designer - LearnPro Inc.",
+            "Curriculum Specialist - EduDesign Co."
+          ],
+          internships: [
+            "Content Development Intern - BrightPath",
+            "Education Material Intern - SmartLearn"
+          ]
+        }
+      },
+
+      Engineering: {
+        "Mechanical Engineer": {
+          jobs: [
+            "Mechanical Design Engineer - MechaWorks",
+            "Maintenance Engineer - TechMach Industries"
+          ],
+          internships: [
+            "Mechanical Intern - AutoCraft",
+            "Engineering Trainee - BuildRight"
+          ]
+        },
+        "Civil Engineer": {
+          jobs: [
+            "Site Engineer - SolidBuild Corp.",
+            "Structural Engineer - MetroConstruct"
+          ],
+          internships: [
+            "Civil Intern - BuildSmart",
+            "Construction Intern - CityInfra"
+          ]
+        },
+        "Electrical Engineer": {
+          jobs: [
+            "Power Systems Engineer - VoltEnergy",
+            "Electronics Engineer - CircuitLab"
+          ],
+          internships: [
+            "Electrical Intern - ElectroTech",
+            "Energy Intern - PowerGrid Co."
+          ]
+        },
+        "Architect": {
+          jobs: [
+            "Junior Architect - DesignSpace Studio",
+            "Building Designer - ArchWorks"
+          ],
+          internships: [
+            "Architecture Intern - PlanForm",
+            "Design Assistant Intern - UrbanShape"
+          ]
+        }
+      },
+
+      Business: {
+        "Accountant": {
+          jobs: [
+            "Junior Accountant - FinTrust Co.",
+            "Auditor - SmartBooks Group"
+          ],
+          internships: [
+            "Accounting Intern - LedgerLine",
+            "Finance Intern - MoneyMatters"
+          ]
+        },
+        "Financial Analyst": {
+          jobs: [
+            "Financial Analyst - MarketEdge",
+            "Investment Analyst - CapitalCore"
+          ],
+          internships: [
+            "Finance Intern - WealthWise",
+            "Analyst Intern - FinGrow"
+          ]
+        },
+        "Marketing Specialist": {
+          jobs: [
+            "Marketing Associate - BrandUp Media",
+            "Digital Marketing Executive - AdSphere"
+          ],
+          internships: [
+            "Marketing Intern - PromoPlus",
+            "Social Media Intern - Trendify"
+          ]
+        },
+        "Entrepreneur": {
+          jobs: [
+            "Startup Founder - InnovateHub",
+            "Small Business Owner - Self-Run Enterprises"
+          ],
+          internships: [
+            "Business Development Intern - LaunchPad",
+            "Startup Intern - VentureLab"
+          ]
+        },
+        "Sales Executive": {
+          jobs: [
+            "Sales Representative - SellSmart",
+            "Account Executive - MarketPro"
+          ],
+          internships: [
+            "Sales Intern - DealMasters",
+            "Client Relations Intern - PeakSales"
+          ]
+        }
+      },
+
+      Hospitality: {
+        "Hotel Manager": {
+          jobs: [
+            "Front Office Manager - LuxeStay Hotel",
+            "Operations Supervisor - Seaside Resort"
+          ],
+          internships: [
+            "Hotel Intern - GrandView",
+            "Hospitality Assistant - MetroInn"
+          ]
+        },
+        "Chef": {
+          jobs: [
+            "Sous Chef - FlavorHouse",
+            "Pastry Chef - SweetBite Cafe"
+          ],
+          internships: [
+            "Culinary Intern - GourmetWorks",
+            "Kitchen Assistant - FoodCraft"
+          ]
+        },
+        "Tour Guide": {
+          jobs: [
+            "Local Tour Guide - ExploreMore",
+            "Cultural Guide - Heritage Tours"
+          ],
+          internships: [
+            "Tourism Intern - GlobeTrek",
+            "Guide Intern - FunJourney"
+          ]
+        },
+        "Event Coordinator": {
+          jobs: [
+            "Event Organizer - PlanPerfect",
+            "Conference Coordinator - MeetPro"
+          ],
+          internships: [
+            "Event Intern - PartyLine",
+            "Planning Intern - GatherGo"
+          ]
+        },
+        "Travel Consultant": {
+          jobs: [
+            "Travel Advisor - WanderWorld",
+            "Tour Planner - DreamTrips"
+          ],
+          internships: [
+            "Travel Intern - GoExplorer",
+            "Booking Assistant - JetAway"
+          ]
+        }
+      },
+
+      Law: {
+        "Lawyer": {
+          jobs: [
+            "Associate Lawyer - Justice Partners",
+            "Legal Counsel - GovLaw Office"
+          ],
+          internships: [
+            "Legal Intern - LawLine",
+            "Paralegal Intern - CaseCraft"
+          ]
+        },
+        "Paralegal": {
+          jobs: [
+            "Corporate Paralegal - LexWorks",
+            "Litigation Assistant - RightLaw Firm"
+          ],
+          internships: [
+            "Legal Assistant Intern - FairJustice",
+            "Court Clerk Intern - LegalEase"
+          ]
+        },
+        "Public Administrator": {
+          jobs: [
+            "Administrative Officer - GovServe Bureau",
+            "Community Program Manager - CityHall"
+          ],
+          internships: [
+            "Public Service Intern - LocalGov",
+            "Admin Intern - CivicWorks"
+          ]
+        },
+        "Police Officer": {
+          jobs: [
+            "Patrol Officer - Metro Police Department",
+            "Investigator - State Safety Bureau"
+          ],
+          internships: [
+            "Law Enforcement Intern - PoliceCadet",
+            "Safety Intern - CityWatch"
+          ]
+        },
+        "Policy Analyst": {
+          jobs: [
+            "Policy Researcher - National Policy Center",
+            "Government Analyst - PublicAffairs Office"
+          ],
+          internships: [
+            "Policy Intern - ThinkPublic",
+            "Research Intern - SocioGov"
+          ]
+        }
+      }
+    };
+
+    const fieldData = opportunities[field] && opportunities[field][job];
+    const jobList = document.getElementById("jobList");
+    const internList = document.getElementById("internList");
+
+    if (fieldData) {
+      fieldData.jobs.forEach(j => {
+        const card = document.createElement("div");
+        card.className = "opportunity-card";
+        card.textContent = j;
+        jobList.appendChild(card);
+      });
+
+      fieldData.internships.forEach(i => {
+        const card = document.createElement("div");
+        card.className = "opportunity-card";
+        card.textContent = i;
+        internList.appendChild(card);
+      });
+    } else {
+      jobList.innerHTML = "<p>No opportunities found for this field yet.</p>";
+      internList.innerHTML = "<p>Check back soon for internships.</p>";
+    }
+  </script>
+
+</body>
+
+</html>

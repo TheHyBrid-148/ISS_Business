@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>University Student Profile</title>
+  <link rel="stylesheet" href="unistudentprofile.css" />
+</head>
+
+<body>
+  <div class="container card">
+    <div class="profile-header">
+      <h1>University Student Profile</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- ===== Degree Information Section ===== -->
+    <div class="profile-section">
+      <h2>Your Current Program</h2>
+      <p id="degree-info">Loading degree information...</p>
+    </div>
+
+    <!-- ===== Skills Section ===== -->
+    <div class="profile-section">
+      <h2>Your Skills & Strengths</h2>
+      <p id="key-skill">Loading skill data...</p>
+      <ul id="skills-list"></ul>
+    </div>
+
+    <!-- ===== Recommended Internships Section ===== -->
+    <div class="profile-section">
+      <h2>Recommended Internships</h2>
+      <div id="internship-list">
+        <p>Loading internships based on your degree...</p>
+      </div>
+    </div>
+
+    <!-- ===== Profile Information Section ===== -->
+    <div class="profile-section">
+      <h2>Update Profile Information</h2>
+      <form id="profileForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+        <label for="bio">Short Bio:</label>
+        <textarea id="bio" name="bio" rows="3" placeholder="Tell us something about yourself..."></textarea>
+
+        <button type="submit" class="save-btn">Save Changes</button>
+      </form>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='unistudentquestionnaire.html'">← Back</button>
+    </div>
+  </div>
+
+  <script>
+    // ===== Load Data from localStorage =====
+    const careerSkill = localStorage.getItem("careerSkill");
+    const bachelorDegree = localStorage.getItem("bachelorDegree");
+
+    const keySkillText = document.getElementById("key-skill");
+    const skillsList = document.getElementById("skills-list");
+    const degreeInfo = document.getElementById("degree-info");
+    const internshipList = document.getElementById("internship-list");
+
+    // ===== Display Skill Data =====
+    if (careerSkill) {
+      const skillDescriptions = {
+        Leadership: "You’re a natural leader — confident, decisive, and able to motivate others.",
+        Communication: "You’re excellent at expressing ideas and connecting with people.",
+        Creativity: "You’re imaginative and full of innovative ideas.",
+        "Problem-Solving": "You’re analytical and logical, great at finding solutions to complex challenges."
+      };
+
+      keySkillText.innerHTML = `<strong>${careerSkill}</strong><br>${skillDescriptions[careerSkill] || ""}`;
+
+      const extraSkills = {
+        Leadership: ["Decision-Making", "Team Coordination", "Motivation"],
+        Communication: ["Public Speaking", "Active Listening", "Writing Skills"],
+        Creativity: ["Design Thinking", "Innovation", "Adaptability"],
+        "Problem-Solving": ["Critical Thinking", "Research", "Analytical Skills"]
+      };
+
+      skillsList.innerHTML = "";
+      (extraSkills[careerSkill] || []).forEach(skill => {
+        const li = document.createElement("li");
+        li.textContent = skill;
+        skillsList.appendChild(li);
+      });
+    } else {
+      keySkillText.textContent = "You haven’t completed the skills test yet.";
+      skillsList.innerHTML = "<li>Take the skills quiz to see your results.</li>";
+    }
+
+    // ===== Display Degree Information =====
+    if (bachelorDegree) {
+      degreeInfo.innerHTML = `<strong>${bachelorDegree}</strong>`;
+    } else {
+      degreeInfo.textContent = "No degree information found. Please complete the questionnaire.";
+    }
+
+    // ===== Recommended Internships Logic =====
+    const internships = {
+      "BS Computer Science": [
+        "Software Development Intern - TechWorks",
+        "Data Analytics Intern - ByteLab",
+        "IT Support Intern - CloudNet"
+      ],
+      "BS Information Technology": [
+        "Web Developer Intern - CodeForge",
+        "Network Operations Intern - FiberConnect",
+        "UI/UX Design Intern - InnovateTech"
+      ],
+      "BS Engineering": [
+        "Mechanical Design Intern - BuildPro",
+        "Electrical Systems Intern - PowerEdge",
+        "Civil Engineering Intern - Structura"
+      ],
+      "BS Business Administration": [
+        "Marketing Intern - BrandReach",
+        "Finance Intern - CapitalEdge",
+        "Operations Intern - EnterpriseHub"
+      ],
+      "BS Psychology": [
+        "HR Intern - MindBridge Consulting",
+        "Counseling Assistant Intern - Wellness Center",
+        "Research Intern - Behavioral Insights Lab"
+      ],
+      "BS Education": [
+        "Teaching Assistant Intern - BrightMinds Academy",
+        "Curriculum Design Intern - LearnLab",
+        "Student Affairs Intern - EduConnect"
+      ],
+      "BS Accountancy": [
+        "Accounting Intern - FinServe",
+        "Audit Intern - ClearBooks",
+        "Tax Intern - SmartLedger"
+      ],
+      "BS Nursing": [
+        "Clinical Intern - HealthFirst Hospital",
+        "Patient Care Intern - MedLife Center",
+        "Public Health Intern - CareReach"
+      ],
+      "AB Communication": [
+        "Media Production Intern - VisionTV",
+        "Public Relations Intern - CommuniCore",
+        "Content Writing Intern - StoryHub"
+      ],
+      "BA Political Science": [
+        "Policy Research Intern - GovWatch",
+        "Public Affairs Intern - CivicVoice",
+        "Legal Assistant Intern - LawConnect"
+      ],
+      "BS Architecture": [
+        "Architectural Design Intern - BuildVision",
+        "Urban Planning Intern - CityScape",
+        "Construction Management Intern - ArchConstruct"
+      ],
+      "Other": [
+        "General Office Intern - MultiServe Inc.",
+        "Customer Relations Intern - ConnectPlus",
+        "Project Assistant Intern - UniWorks"
+      ]
+    };
+
+    internshipList.innerHTML = "";
+    if (bachelorDegree && internships[bachelorDegree]) {
+      internships[bachelorDegree].forEach(intern => {
+        const div = document.createElement("div");
+        div.classList.add("internship-card");
+        div.innerHTML = `
+          <h3>${intern.split(" - ")[0]}</h3>
+          <p><strong>Company:</strong> ${intern.split(" - ")[1]}</p>
+        `;
+        internshipList.appendChild(div);
+      });
+    } else {
+      internshipList.innerHTML = "<p>No internship data available for your program.</p>";
+    }
+
+    // ===== Save Profile Information =====
+    document.getElementById("profileForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Profile updated successfully!");
+    });
+
+    // ===== Logout Function =====
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.clear();
+        window.location.href = "signin.html";
+      }
+    }
+  </script>
+</body>
+
+</html>

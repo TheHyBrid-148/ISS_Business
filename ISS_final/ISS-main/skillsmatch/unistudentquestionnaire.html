@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>University Skills Assessment</title>
+  <link rel="stylesheet" href="./unistudentquestionnaire.css" />
+</head>
+
+<body>
+  <!-- Logout Button -->
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <div class="container card">
+    <h1>University Skills Assessment</h1>
+    <p class="subtitle">
+      Discover your top skill area! This quiz helps identify your strengths and how they connect to potential career fields.
+    </p>
+
+    <!-- ===== Bachelor's Degree Section ===== -->
+    <div id="bachelorSection" class="questionnaire">
+      <h2 class="section-title">Your Current Program</h2>
+      <div class="question">
+        <h3>What Bachelor's degree are you currently taking?</h3>
+        <select id="bachelorDegree" class="dropdown">
+          <option value="" disabled selected>-- Select your degree --</option>
+          <option value="BS Computer Science">BS Computer Science</option>
+          <option value="BS Information Technology">BS Information Technology</option>
+          <option value="BS Engineering">BS Engineering</option>
+          <option value="BS Business Administration">BS Business Administration</option>
+          <option value="BS Psychology">BS Psychology</option>
+          <option value="BS Education">BS Education</option>
+          <option value="BS Accountancy">BS Accountancy</option>
+          <option value="BS Nursing">BS Nursing</option>
+          <option value="AB Communication">AB Communication</option>
+          <option value="BA Political Science">BA Political Science</option>
+          <option value="BS Architecture">BS Architecture</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <button id="continueToSkills" class="continue-btn">Continue →</button>
+    </div>
+
+    <!-- ===== Career Skills Test ===== -->
+    <div id="skillsTest" class="questionnaire hidden">
+      <h2 class="section-title">Skills Assessment</h2>
+
+      <div class="question">
+        <h3>1. How do you usually approach a new project or challenge?</h3>
+        <div class="options">
+          <label><input type="radio" name="s1" value="Problem-Solving"> Analyze it step by step to find the best solution</label>
+          <label><input type="radio" name="s1" value="Creativity"> Brainstorm fresh, innovative ideas</label>
+          <label><input type="radio" name="s1" value="Communication"> Discuss it with others to gather feedback</label>
+          <label><input type="radio" name="s1" value="Leadership"> Take initiative and assign roles to team members</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>2. In group work, which role do you usually take?</h3>
+        <div class="options">
+          <label><input type="radio" name="s2" value="Leadership"> Team leader who makes sure things get done</label>
+          <label><input type="radio" name="s2" value="Communication"> Mediator who keeps everyone connected</label>
+          <label><input type="radio" name="s2" value="Creativity"> Idea generator who keeps things interesting</label>
+          <label><input type="radio" name="s2" value="Problem-Solving"> Analyst who spots and fixes issues</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>3. Which activity do you enjoy the most?</h3>
+        <div class="options">
+          <label><input type="radio" name="s3" value="Creativity"> Designing, writing, or creating new concepts</label>
+          <label><input type="radio" name="s3" value="Leadership"> Organizing events or guiding a team</label>
+          <label><input type="radio" name="s3" value="Communication"> Giving presentations or engaging with people</label>
+          <label><input type="radio" name="s3" value="Problem-Solving"> Debugging, troubleshooting, or analyzing data</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>4. How do you respond when faced with a difficult situation?</h3>
+        <div class="options">
+          <label><input type="radio" name="s4" value="Problem-Solving"> Stay calm and think of logical solutions</label>
+          <label><input type="radio" name="s4" value="Creativity"> Look for alternative or unconventional approaches</label>
+          <label><input type="radio" name="s4" value="Communication"> Ask for input or talk it through with others</label>
+          <label><input type="radio" name="s4" value="Leadership"> Take charge and guide others toward resolution</label>
+        </div>
+      </div>
+
+      <div class="question">
+        <h3>5. What feedback do you most often receive from professors or peers?</h3>
+        <div class="options">
+          <label><input type="radio" name="s5" value="Leadership"> “You’re great at organizing and motivating others.”</label>
+          <label><input type="radio" name="s5" value="Communication"> “You explain ideas clearly and collaborate well.”</label>
+          <label><input type="radio" name="s5" value="Creativity"> “Your ideas are unique and innovative.”</label>
+          <label><input type="radio" name="s5" value="Problem-Solving"> “You’re quick to find solutions under pressure.”</label>
+        </div>
+      </div>
+
+      <button id="submitSkillsBtn" class="continue-btn">See My Results →</button>
+    </div>
+
+    <!-- ===== Result Section ===== -->
+    <div id="result" class="result-box hidden">
+      <h2>Your Results</h2>
+      <p><strong>Top Skill:</strong> <span id="skillResult"></span></p>
+      <p><strong>Program:</strong> <span id="degreeResult"></span></p>
+      <button class="continue-btn" onclick="window.location.href='unistudentprofile.html'">Continue</button>
+    </div>
+
+    <div class="button-container">
+      <button class="back-btn" onclick="window.location.href='signin.html'">← Back</button>
+    </div>
+  </div>
+
+  <!-- ===== JavaScript Logic ===== -->
+  <script>
+    const bachelorSection = document.getElementById("bachelorSection");
+    const skillsTest = document.getElementById("skillsTest");
+    const resultBox = document.getElementById("result");
+    const skillsBtn = document.getElementById("submitSkillsBtn");
+    const skillResult = document.getElementById("skillResult");
+    const degreeResult = document.getElementById("degreeResult");
+    const continueBtn = document.getElementById("continueToSkills");
+
+    // ===== Bachelor's Degree Selection Logic =====
+    continueBtn.addEventListener("click", () => {
+      const degree = document.getElementById("bachelorDegree").value;
+      if (!degree) {
+        alert("Please select your bachelor's degree before continuing.");
+        return;
+      }
+      localStorage.setItem("bachelorDegree", degree);
+      bachelorSection.classList.add("hidden");
+      skillsTest.classList.remove("hidden");
+    });
+
+    // ===== Skills Test Logic =====
+    skillsBtn.addEventListener("click", () => {
+      const skillAnswers = [...document.querySelectorAll("input[name^='s']:checked")].map(a => a.value);
+
+      if (skillAnswers.length < 5) {
+        alert("Please answer all questions before continuing!");
+        return;
+      }
+
+      const skillCounts = skillAnswers.reduce((acc, val) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+      }, {});
+
+      const topSkill = Object.keys(skillCounts).reduce((a, b) => skillCounts[a] > skillCounts[b] ? a : b);
+
+      const skillDescriptions = {
+        Leadership: "You’re a natural leader — confident, decisive, and able to motivate others. Great for management or project coordination.",
+        Communication: "You excel in expressing ideas and connecting with people. Ideal for teaching, marketing, or public relations.",
+        Creativity: "You’re imaginative and original — perfect for design, arts, or content creation careers.",
+        "Problem-Solving": "You’re analytical and practical — suited for engineering, research, or technical fields."
+      };
+
+      // Display results
+      skillsTest.classList.add("hidden");
+      resultBox.classList.remove("hidden");
+
+      const degree = localStorage.getItem("bachelorDegree");
+      skillResult.innerHTML = `<strong>${topSkill}</strong><br>${skillDescriptions[topSkill]}`;
+      degreeResult.textContent = degree;
+
+      // Save result
+      localStorage.setItem("careerSkill", topSkill);
+    });
+
+    // ===== Logout Function =====
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+</body>
+</html>
