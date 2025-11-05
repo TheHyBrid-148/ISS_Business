@@ -15,13 +15,13 @@ body {
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: #fff;
   position: relative;
-  overflow-y: auto; 
+  overflow-y: auto;
   overflow-x: hidden;
-  padding: 3rem 1rem; 
+  padding: 3rem 1rem;
 }
 
 .overlay {
-  position: fixed; /* changed to fixed so it covers full background while scrolling */
+  position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(6px);
@@ -172,6 +172,92 @@ form button:hover {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ===== Manager Sign-In Link ===== */
+.manager-link {
+  margin-top: 20px;
+  text-align: center;
+}
+.manager-link a {
+  color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+.manager-link a:hover {
+  color: #aad4ff;
+}
+
+/* ===== Modal Background ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Modal Box ===== */
+.modal-content {
+  background: #ffffff;
+  color: #000;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 320px;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* ===== Close Button ===== */
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+.close:hover {
+  color: #000;
+}
+
+/* ===== Modal Inputs ===== */
+.modal-content input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #f9f9f9;
+  color: #000;
+  font-size: 1rem;
+}
+
+.modal-content input::placeholder {
+  color: #555;
+}
+
+/* ===== Modal Button ===== */
+.modal-content button {
+  width: 95%;
+  padding: 10px;
+  background-color: #0078ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-content button:hover {
+  background-color: #005fcc;
 }
 
 /* ===== Responsive ===== */

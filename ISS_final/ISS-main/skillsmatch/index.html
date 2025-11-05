@@ -10,10 +10,32 @@
       localStorage.setItem("userRole", role);
       window.location.href = "signup.html";
     }
+
+    // Modal functions
+    function openModal() {
+      document.getElementById("managerModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("managerModal").style.display = "none";
+    }
+
+    function managerLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById("managerUsername").value;
+      const password = document.getElementById("managerPassword").value;
+
+      if (username === "manager" && password === "admin123") {
+        alert("Login successful!");
+        window.location.href = "manager-dashboard.html";
+      } else {
+        alert("Invalid username or password");
+      }
+    }
   </script>
 </head>
 <body>
-  <div class="overlay"></div>
+
   <main class="card">
     <h1>Welcome to <span class="brand">Skills Match</span></h1>
     <p class="subtitle">Select your role to get started</p>
@@ -35,6 +57,26 @@
         I’m Currently Unemployed
       </button>
     </div>
+
+    <!-- Manager Login Button -->
+    <p class="manager-link">
+      <a href="#" onclick="openModal()">Manager Sign In</a>
+    </p>
   </main>
+
+  <!-- Modal -->
+  <div id="managerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Manager Login</h2>
+      <form onsubmit="managerLogin(event)">
+        <input type="text" id="managerUsername" placeholder="Username" required />
+        <input type="password" id="managerPassword" placeholder="Password" required />
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="overlay"></div>
 </body>
 </html>
